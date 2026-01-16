@@ -1,0 +1,78 @@
+{
+  "participants": {
+    "purple_agent": "019bc4dd-f03b-7a11-9e64-61fce92c8d95"
+  },
+  "results": [
+    {
+      "benchmark": "FAB++ Finance Agent Benchmark",
+      "version": "1.0.0",
+      "purple_agent": "http://purple_agent:9009/",
+      "ticker": "NVDA",
+      "num_tasks": 10,
+      "num_successful": 10,
+      "average_alpha_score": 67580.0,
+      "results": [
+        {
+          "task_id": "OPT_021_variant_MSFT_2024",
+          "alpha_score": 77000.0,
+          "role_score": 77.0,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "OPT_051_variant_INTC_2024",
+          "alpha_score": 58400.00000000001,
+          "role_score": 58.400000000000006,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "FAB_002_variant_META_2024",
+          "alpha_score": 64900.00000000001,
+          "role_score": 64.9,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "OPT_051_variant_ADBE_2022",
+          "alpha_score": 63833.333333333336,
+          "role_score": 63.833333333333336,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "OPT_060_variant_ORCL_2024",
+          "alpha_score": 67000.0,
+          "role_score": 67.0,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "OPT_070_literal_2023",
+          "alpha_score": 83000.0,
+          "role_score": 83.0,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "OPT_051_variant_NVDA_2021",
+          "alpha_score": 57833.333333333336,
+          "role_score": 57.833333333333336,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "OPT_031_variant_MCD_2021",
+          "alpha_score": 72833.33333333334,
+          "role_score": 72.83333333333334,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "OPT_011_variant_ORCL_2023",
+          "alpha_score": 59500.0,
+          "role_score": 59.5,
+          "debate_multiplier": 1.0
+        },
+        {
+          "task_id": "OPT_020_variant_GOOGL_2024",
+          "alpha_score": 71500.0,
+          "role_score": 71.5,
+          "debate_multiplier": 1.0
+        }
+      ]
+    }
+  ]
+}
