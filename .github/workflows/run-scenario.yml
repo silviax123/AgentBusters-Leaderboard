@@ -80,9 +80,11 @@ jobs:
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
           USERNAME=${{ github.repository_owner }}
           UNIQUE_NAME="${USERNAME}-${TIMESTAMP}"
+          BRANCH_NAME="submission/${UNIQUE_NAME}"
           echo "unique_name=$UNIQUE_NAME" >> $GITHUB_OUTPUT
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
-      - name: Publish results to main branch
+      - name: Create submission branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -90,32 +92,37 @@ jobs:
           # Fetch main branch
           git fetch origin main
 
-          # Create a temporary branch from main
-          git checkout -b publish-results origin/main
+          # Create submission branch from main
+          git checkout -b ${{ steps.metadata.outputs.branch_name }} origin/main
 
           # Copy result files
           cp scenario.toml submissions/${{ steps.metadata.outputs.unique_name }}.toml
           cp output/results.json results/${{ steps.metadata.outputs.unique_name }}.json
           cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
 
-          # Commit and push to main
+          # Commit and push to submission branch
           git add submissions/${{ steps.metadata.outputs.unique_name }}.toml submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json results/${{ steps.metadata.outputs.unique_name }}.json
           git commit -m "Submission: ${{ steps.metadata.outputs.unique_name }}
 
           Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           Source branch: ${{ github.ref_name }}"
-          git push origin publish-results:main
+          git push origin ${{ steps.metadata.outputs.branch_name }}
 
-          echo "::notice title=Results Published::Results published to leaderboard: ${{ steps.metadata.outputs.unique_name }}"
+          echo "::notice title=Submission Branch Created::Branch ${{ steps.metadata.outputs.branch_name }} created. Open a PR to merge results to main."
 
       - name: Output results summary
         run: |
-          echo "### Results Published to Leaderboard" >> $GITHUB_STEP_SUMMARY
+          echo "### Assessment Complete - Create PR to Submit" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Submission ID:** ${{ steps.metadata.outputs.unique_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Submission Branch:** \`${{ steps.metadata.outputs.branch_name }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Results are now visible on the leaderboard." >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[Click here to open a pull request](${{ github.server_url }}/${{ github.repository }}/compare/main...${{ steps.metadata.outputs.branch_name }}?expand=1&title=Submission:%20${{ steps.metadata.outputs.unique_name }})" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ **Important:** Merging the PR is required for scores to appear on the leaderboard." >> $GITHUB_STEP_SUMMARY
 
       - name: Cleanup
         if: always()
