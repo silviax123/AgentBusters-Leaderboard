@@ -4,7 +4,7 @@
 [green_agent]
 # CIO-Agent Green Agent - FAB++ Evaluator
 agentbeats_id = "019bc421-99d0-7ee3-ae27-658145eff474"
-env = { OPENAI_API_KEY = "${OPENAI_API_KEY}" }
+env = { OPENAI_API_KEY = "${OPENAI_API_KEY}", EVAL_DATA_REPO = "${EVAL_DATA_REPO}", EVAL_DATA_PAT = "${EVAL_DATA_PAT}" }
 
 [[participants]]
 # Purple Agent (Finance Analyst) to be evaluated
@@ -15,12 +15,12 @@ env = { OPENAI_API_KEY = "${OPENAI_API_KEY}" }
 
 [config]
 # Assessment configuration
-num_tasks = 10
+num_tasks = 12
 conduct_debate = false
 timeout_seconds = 300
 
-# Datasets to evaluate on
-datasets = ["bizfinbench", "public_csv", "options", "synthetic"]
+# Datasets to evaluate on (including crypto trading benchmark)
+datasets = ["bizfinbench", "public_csv", "options", "synthetic", "crypto"]
 
 # Sampling strategy: "stratified", "random", "sequential"
 sampling_strategy = "stratified"
@@ -30,3 +30,4 @@ bizfinbench_limit = 3
 public_csv_limit = 2
 options_limit = 3
 synthetic_limit = 2
+crypto_limit = 2  # Crypto trading scenarios

@@ -5,6 +5,10 @@
   },
   {
     "name": "Section Breakdown",
-    "query": "SELECT participants.purple_agent AS id, ROUND(r.section_scores.knowledge_retrieval.score, 1) AS \"Knowledge\", ROUND(r.section_scores.analytical_reasoning.score, 1) AS \"Analysis\", ROUND(r.section_scores.options_trading.score, 1) AS \"Options\" FROM (SELECT participants, results[1] AS r FROM results) ORDER BY r.overall_score.score DESC"
+    "query": "SELECT participants.purple_agent AS id, ROUND(r.section_scores.knowledge_retrieval.score, 1) AS \"Knowledge\", ROUND(r.section_scores.analytical_reasoning.score, 1) AS \"Analysis\", ROUND(r.section_scores.options_trading.score, 1) AS \"Options\", ROUND(r.section_scores.crypto_trading.score, 1) AS \"Crypto\" FROM (SELECT participants, results[1] AS r FROM results) ORDER BY r.overall_score.score DESC"
+  },
+  {
+    "name": "Crypto Trading Details",
+    "query": "SELECT participants.purple_agent AS id, ROUND(r.section_scores.crypto_trading.score, 1) AS \"Crypto Score\", ROUND(r.section_scores.crypto_trading.sub_scores.sharpe, 2) AS \"Sharpe\", ROUND(r.section_scores.crypto_trading.sub_scores.total_return, 2) AS \"Return%\", ROUND(r.section_scores.crypto_trading.sub_scores.max_drawdown, 2) AS \"MaxDD%\" FROM (SELECT participants, results[1] AS r FROM results) WHERE r.section_scores.crypto_trading IS NOT NULL ORDER BY r.section_scores.crypto_trading.score DESC"
   }
 ]

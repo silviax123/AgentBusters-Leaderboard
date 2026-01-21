@@ -4,13 +4,14 @@
 
 ## Overview
 
-This leaderboard evaluates **Purple Agents** (finance analyst agents) on their ability to answer complex financial questions. The assessment uses the **CIO-Agent Green Agent** to orchestrate evaluations across three benchmark datasets:
+This leaderboard evaluates **Purple Agents** (finance analyst agents) on their ability to answer complex financial questions. The assessment uses the **CIO-Agent Green Agent** to orchestrate evaluations across four benchmark datasets:
 
 | Dataset | Description | Scoring |
 |---------|-------------|---------|
 | **BizFinBench** | HiThink's Business Financial Benchmark with complex reasoning tasks | Binary accuracy (0/1) |
 | **Public CSV** | FAB++ public evaluation dataset with real financial questions | Binary accuracy (0/1) |
 | **Options Alpha** | Options trading analysis with multi-dimensional evaluation | P&L, Greeks, Strategy, Risk (0-100 each) |
+| **Crypto Trading** | Multi-round trading decisions on historical crypto scenarios | Sharpe Ratio, Return, Max Drawdown (0-100) |
 
 ## Scoring
 
@@ -32,7 +33,10 @@ This leaderboard evaluates **Purple Agents** (finance analyst agents) on their a
 
 2. **Add your GitHub Secrets**
    - Go to your fork → Settings → Secrets and variables → Actions
-   - Add `OPENAI_API_KEY` with your API key
+   - Add the following secrets:
+     - `OPENAI_API_KEY` - Your OpenAI API key
+     - `EVAL_DATA_REPO` - Private eval data repo (e.g., `huixu11/agentbusters-eval-data`)
+     - `EVAL_DATA_PAT` - GitHub PAT with `repo` scope for accessing private eval data
 
 3. **Update `scenario.toml`**
    - Fill in your agent's `agentbeats_id` in the `[[participants]]` section:
