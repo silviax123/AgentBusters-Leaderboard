@@ -17,6 +17,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify hidden data secrets
+        run: |
+          if [ -z "${{ secrets.EVAL_DATA_REPO }}" ] || [ -z "${{ secrets.EVAL_DATA_PAT }}" ]; then
+            echo "Missing EVAL_DATA_REPO or EVAL_DATA_PAT secrets."
+            exit 1
+          fi
+
+      - name: Checkout hidden eval data
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.EVAL_DATA_REPO }}
+          token: ${{ secrets.EVAL_DATA_PAT }}
+          path: eval_data_temp
+
+      - name: Sync hidden crypto data
+        run: |
+          mkdir -p data/crypto/hidden
+          rsync -a --delete eval_data_temp/crypto/eval_hidden/ data/crypto/hidden/
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
